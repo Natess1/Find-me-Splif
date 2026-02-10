@@ -56,5 +56,11 @@ public class PlayerVisual : MonoBehaviour
         }
     }
 
-    
+    private void OnDestroy()
+    {
+        Player.Instance.OnPlayerDeath -= Player_OnPlayerDeath;
+
+    }
+
+
 }

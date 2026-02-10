@@ -54,6 +54,8 @@ public class SceletonVisual : MonoBehaviour
     private void OnDestroy()
     {
         enemyAI.OnEnemyAttack -= enemyAI_OnEnemyAttack;
+        enemyEntity.OnTakeHit -= enemyEntity_OnTakeHit;
+        enemyEntity.OnDeath -= enemyEntity_OnDeath;
     }
 
     public void TriggerAttackAnimOff()

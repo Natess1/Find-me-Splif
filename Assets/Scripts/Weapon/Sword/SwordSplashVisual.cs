@@ -23,4 +23,10 @@ public class SwordSplashVisual : MonoBehaviour
     {
         animator.SetTrigger(ATTACK);
     }
+
+    private void OnDestroy()
+    {
+        sword.OnSwordSWing -= Sword_OnSwordSWing;
+
+    }
 }

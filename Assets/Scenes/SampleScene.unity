@@ -363,7 +363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FlashBlink
   damagebleObject: {fileID: 1148133273}
   blinkMaterial: {fileID: 2100000, guid: 981689478f1482849a8ee333c0783886, type: 2}
-  blinkDuration: 0.2
+  blinkDuration: 0.3
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

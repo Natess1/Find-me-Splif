@@ -16,28 +16,29 @@ public class FlashBlink : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         defaultMaterial = spriteRenderer.material;
+
+
         IsBlinking = true;
-
-        if(damagebleObject is Player)
-        {
-            (damagebleObject as Player).OnPlayerBlink += damagebleObject_OnPlayerBlink;
-        }
     }
 
-    private void damagebleObject_OnPlayerBlink(object sender, EventArgs e)
-    {
-        SetBlinkingMaterial();
-    }
 
     private void Update()
     {
         if (IsBlinking)
         {
             currentBlinkTimer -= Time.deltaTime;
-            if(currentBlinkTimer < 0)
+            if (currentBlinkTimer < 0)
             {
                 setDefaultMaterials();
             }
+        }
+    }
+
+    private void Start()
+    {
+        if (damagebleObject is Player)
+        {
+            (damagebleObject as Player).OnPlayerBlink += damagebleObject_OnPlayerBlink;
         }
     }
 
@@ -52,10 +53,23 @@ public class FlashBlink : MonoBehaviour
         spriteRenderer.material = defaultMaterial;
     }
 
+    private void damagebleObject_OnPlayerBlink(object sender, EventArgs e)
+    {
+        SetBlinkingMaterial();
+    }
+
     private void SetBlinkingMaterial()
     {
         currentBlinkTimer = blinkDuration;
         spriteRenderer.material = blinkMaterial;
+    }
+
+    private void OnDestroy()
+    {
+        if(damagebleObject is Player)
+        {
+            (damagebleObject as Player).OnPlayerBlink -= damagebleObject_OnPlayerBlink;
+        }
     }
 
 
