@@ -7,11 +7,9 @@ using System.Collections;
 [SelectionBase]
 public class Player : MonoBehaviour
 {
-
     public static Player Instance { get; private set; }
 
     public event EventHandler OnPlayerDeath;
-
     public event EventHandler OnPlayerBlink;
 
     [SerializeField] private float movingSpeed = 5f;
@@ -20,23 +18,21 @@ public class Player : MonoBehaviour
 
 
     Vector2 InputVector;
-
-    private Rigidbody2D rb;
-
+    private Rigidbody2D rigidBody;
     private KnockBack KnockBack;
+    private Camera mainCamera;
 
-    private float minMovingSpeed = 0.1f;
-
+    private readonly float minMovingSpeed = 0.1f;
     private int currentHealth;
 
     private bool canTakeDamage;
-
     private bool isRunning = false;
     private bool isAlive;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rigidBody = GetComponent<Rigidbody2D>();
+        mainCamera = Camera.main;
         Instance = this;
         KnockBack = GetComponent<KnockBack>();
     }
@@ -72,14 +68,12 @@ public class Player : MonoBehaviour
 
     public Vector3 GetPlayerScreenPosition()
     {
-        Vector3 screenPlayerPos = Camera.main.WorldToScreenPoint(transform.position);
+        Vector3 screenPlayerPos = mainCamera.WorldToScreenPoint(transform.position);
 
         return screenPlayerPos;
     }
 
     public bool IsAlive() => isAlive;
-
-
 
     public void TakeDamage(Transform damageSource, int damage)
     {
@@ -119,7 +113,7 @@ public class Player : MonoBehaviour
     private void HandleMovment()
     {
 
-        rb.MovePosition(rb.position + InputVector * (movingSpeed * Time.deltaTime));
+        rigidBody.MovePosition(rigidBody.position + InputVector * (movingSpeed * Time.deltaTime));
 
         if (Mathf.Abs(InputVector.x) > minMovingSpeed || Mathf.Abs(InputVector.y) > minMovingSpeed)
         {

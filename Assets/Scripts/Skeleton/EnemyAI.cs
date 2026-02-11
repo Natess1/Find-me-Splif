@@ -20,23 +20,20 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private bool isChaisingEnemy = false;
     [SerializeField] private bool isAttackingEnemy = false;
 
+    private NavMeshAgent navMeshAgent;
+    private State state;
+    private Vector3 roamPos;
+    private Vector3 startingPos;
+    private Vector3 lastPos;
+    private float roamingTime;
+    private float roamingSpeed;
+    private float chasingSpeed;
+
     private float nextAttackTime = 0f;
     private float nextCheckDirectionTime = 0f;
     private float checkDirectionDuration = 0.1f;
 
-
-    private NavMeshAgent navMeshAgent;
-    private State state;
-    private float roamingTime;
-    private Vector3 roamPos;
-    private Vector3 startingPos;
-    private float roamingSpeed;
-    private float chasingSpeed;
-
-    private Vector3 lastPos;
-
     public event EventHandler OnEnemyAttack;
-
 
     private void Awake()
     {
@@ -55,21 +52,8 @@ public class EnemyAI : MonoBehaviour
         MovementDirectionHandler();
     }
 
-    public bool IsRunning
-    {
-        get
-        {
-            if (navMeshAgent.velocity == Vector3.zero)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-    }
-
+    public bool IsRunning => navMeshAgent.velocity != Vector3.zero;
+    
     public float GetRoamingSpeed()
     {
         return navMeshAgent.speed / roamingSpeed;

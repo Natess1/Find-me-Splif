@@ -37,8 +37,6 @@ public class KnockBack : MonoBehaviour
         rb.AddForce(difference, ForceMode2D.Impulse);
     }
 
-
-
     public void StopKnockBackMov()
     {
         rb.linearVelocity = Vector2.zero;

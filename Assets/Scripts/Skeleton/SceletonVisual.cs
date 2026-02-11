@@ -5,19 +5,22 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class SceletonVisual : MonoBehaviour
 {
+
     [SerializeField] private EnemyAI enemyAI;
     [SerializeField] private EnemyEntity enemyEntity;
     [SerializeField] private GameObject sceletonShadow;
 
     private Animator animator;
 
-    private const string IS_RUNNING = "IsRunning";
-    private const string CHAISING_SPEED_MULTIPLIER = "ChaisingSpeedMultiplier";
-    private const string ATTACK = "Attack";
-    private const string TAKE_HIT = "TakeHit";
-    private const string IS_DIE = "IsDie";
+
 
     SpriteRenderer spriteRenderer;
+
+    private static readonly int Running = Animator.StringToHash("IsRunning");
+    private static readonly int ChasingSpeedMultiplier = Animator.StringToHash("ChaisingSpeedMultiplier");
+    private static readonly int Attack = Animator.StringToHash("Attack");
+    private static readonly int TakeHit = Animator.StringToHash("TakeHit");
+    private static readonly int Die = Animator.StringToHash("IsDie");
 
     private void Awake()
     {
@@ -27,8 +30,8 @@ public class SceletonVisual : MonoBehaviour
 
     private void Update()
     {
-        animator.SetBool(IS_RUNNING, enemyAI.IsRunning);
-        animator.SetFloat(CHAISING_SPEED_MULTIPLIER, enemyAI.GetRoamingSpeed());
+        animator.SetBool(Running, enemyAI.IsRunning);
+        animator.SetFloat(ChasingSpeedMultiplier, enemyAI.GetRoamingSpeed());
     }
 
     private void Start()
@@ -40,14 +43,14 @@ public class SceletonVisual : MonoBehaviour
 
     private void enemyEntity_OnDeath(object sender, EventArgs e)
     {
-        animator.SetBool(IS_DIE, true);
+        animator.SetBool(Die, true);
         spriteRenderer.sortingOrder = -1;
         sceletonShadow.SetActive(false);
     }
 
     private void enemyEntity_OnTakeHit(object sender, EventArgs e)
     {
-        animator.SetTrigger(TAKE_HIT);
+        animator.SetTrigger(TakeHit);
         
     }
 
@@ -70,6 +73,6 @@ public class SceletonVisual : MonoBehaviour
 
     private void enemyAI_OnEnemyAttack(object sender, EventArgs e)
     {
-        animator.SetTrigger(ATTACK);
+        animator.SetTrigger(Attack);
     }
 }

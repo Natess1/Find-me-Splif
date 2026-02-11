@@ -6,7 +6,8 @@ public class SwordVisual : MonoBehaviour
 
     private Animator animator;
 
-    private const string ATTACK = "Attack";
+    private static readonly int Attack = Animator.StringToHash("Attack");
+
 
     private void Awake()
     {
@@ -20,7 +21,7 @@ public class SwordVisual : MonoBehaviour
 
     private void Sword_OnSwordSWing(object sender, System.EventArgs e)
     {
-        animator.SetTrigger(ATTACK);
+        animator.SetTrigger(Attack);
     }
 
     public void TriggerEndAttackAnim()

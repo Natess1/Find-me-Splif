@@ -21,4 +21,7 @@ public class SelfDestroyVFX : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+
+    
 }

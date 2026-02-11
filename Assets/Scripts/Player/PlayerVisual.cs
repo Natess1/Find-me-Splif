@@ -1,17 +1,16 @@
 using UnityEngine;
 using System;
+using UnityEngine.InputSystem;
 
 
 public class PlayerVisual : MonoBehaviour
 {
     private Animator animator;
-
     private SpriteRenderer spriteRenderer;
-
     private FlashBlink flashBlink;
 
-    private const string IS_RUNNING = "IsRunning";
-    private const string IS_DIE = "IsDie";
+    private static readonly int Die = Animator.StringToHash("IsDie");
+    private static readonly int Running = Animator.StringToHash("IsRunning");
 
     private void Awake()
     {
@@ -29,14 +28,16 @@ public class PlayerVisual : MonoBehaviour
 
     private void Update()
     {
-        animator.SetBool(IS_RUNNING, Player.Instance.IsRunning());
-        if(Player.Instance.IsAlive())
+        animator.SetBool(Running, Player.Instance.IsRunning());
+        if (Player.Instance.IsAlive())
+        {
             PlayerFacing();
+        }
     }
 
     private void Player_OnPlayerDeath(object sender, EventArgs e)
     {
-        animator.SetBool(IS_DIE, true);
+        animator.SetBool(Die, true);
         flashBlink.StopBlinking();
     }
 
@@ -45,15 +46,7 @@ public class PlayerVisual : MonoBehaviour
         Vector3 mousePos = GameInput.Instance.GetMousePosition();
         Vector3 playerPos = Player.Instance.GetPlayerScreenPosition();
 
-        if (mousePos.x < playerPos.x)
-        {
-            spriteRenderer.flipX = true;
-        }
-
-        else
-        {
-            spriteRenderer.flipX = false;
-        }
+        spriteRenderer.flipX = mousePos.x < playerPos.x;
     }
 
     private void OnDestroy()

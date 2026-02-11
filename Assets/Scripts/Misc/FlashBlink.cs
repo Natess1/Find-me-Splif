@@ -36,9 +36,9 @@ public class FlashBlink : MonoBehaviour
 
     private void Start()
     {
-        if (damagebleObject is Player)
+        if (damagebleObject is Player player)
         {
-            (damagebleObject as Player).OnPlayerBlink += damagebleObject_OnPlayerBlink;
+            player.OnPlayerBlink += damagebleObject_OnPlayerBlink;
         }
     }
 
@@ -66,9 +66,9 @@ public class FlashBlink : MonoBehaviour
 
     private void OnDestroy()
     {
-        if(damagebleObject is Player)
+        if(damagebleObject is Player player)
         {
-            (damagebleObject as Player).OnPlayerBlink -= damagebleObject_OnPlayerBlink;
+            player.OnPlayerBlink -= damagebleObject_OnPlayerBlink;
         }
     }
 

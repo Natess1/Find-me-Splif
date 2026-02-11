@@ -12,12 +12,11 @@ public class EnemyEntity : MonoBehaviour
     public event EventHandler OnTakeHit;
     public event EventHandler OnDeath;
 
-
-    private int currentHealth;
-
     private PolygonCollider2D polygonCollider2D;
     private BoxCollider2D boxCollider2D;
     private EnemyAI enemyAI;
+
+    private int currentHealth;
 
     private void Awake()
     {

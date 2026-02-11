@@ -5,9 +5,9 @@ public class SwordSplashVisual : MonoBehaviour
 {
     [SerializeField] private Sword sword;
 
-    private const string ATTACK = "Attack";
-
     private Animator animator;
+
+    private static readonly int Attack = Animator.StringToHash("Attack");
 
     private void Awake()
     {
@@ -21,7 +21,7 @@ public class SwordSplashVisual : MonoBehaviour
 
     private void Sword_OnSwordSWing(object sender, System.EventArgs e)
     {
-        animator.SetTrigger(ATTACK);
+        animator.SetTrigger(Attack);
     }
 
     private void OnDestroy()

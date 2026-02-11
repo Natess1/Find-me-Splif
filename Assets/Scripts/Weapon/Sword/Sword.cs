@@ -6,11 +6,9 @@ public class Sword : MonoBehaviour
 {
     [SerializeField] private int damageAmount = 2;
 
-    public event EventHandler OnSwordSWing;
-
     private PolygonCollider2D polygonCollider2d;
 
-
+    public event EventHandler OnSwordSWing;
 
     private void Awake()
     {
