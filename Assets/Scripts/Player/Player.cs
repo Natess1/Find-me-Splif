@@ -12,9 +12,17 @@ public class Player : MonoBehaviour
     public event EventHandler OnPlayerDeath;
     public event EventHandler OnPlayerBlink;
 
+    [Header("Player Settings")]
     [SerializeField] private float movingSpeed = 5f;
     [SerializeField] private int maxHealth = 10;
     [SerializeField] private float damageRecoveryTime = 0.5f;
+    [SerializeField] private float attackCoolDownTime = 0.3f;
+    [Header("Dash Settings")]
+    [SerializeField] private int dashSpeed = 5;
+    [SerializeField] private float dashTime = 0.4f;
+    [SerializeField] private float dashCoolDownTime = 3f;
+    [Header("Other")]
+    [SerializeField] private TrailRenderer trailRenderer;
 
 
     Vector2 InputVector;
@@ -23,11 +31,14 @@ public class Player : MonoBehaviour
     private Camera mainCamera;
 
     private readonly float minMovingSpeed = 0.1f;
+    private float startMovingSpeed;
     private int currentHealth;
 
     private bool canTakeDamage;
     private bool isRunning = false;
     private bool isAlive;
+    private bool isDashing;
+    private bool canAttack;
 
     private void Awake()
     {
@@ -35,6 +46,8 @@ public class Player : MonoBehaviour
         mainCamera = Camera.main;
         Instance = this;
         KnockBack = GetComponent<KnockBack>();
+
+        startMovingSpeed = movingSpeed;
     }
 
     private void Update()
@@ -55,10 +68,17 @@ public class Player : MonoBehaviour
     {
         currentHealth = maxHealth;
         canTakeDamage = true;
+        canAttack = true;
         isAlive = true;
 
 
         GameInput.Instance.OnPlayerAttack += GameInput_OnPlayerAttack;
+         GameInput.Instance.OnPlayerDash += GameInput_OnPlayerDash;
+    }
+
+    private void GameInput_OnPlayerDash(object sender, EventArgs e)
+    {
+        Dash();
     }
 
     public bool IsRunning()
@@ -89,6 +109,28 @@ public class Player : MonoBehaviour
         }
 
         DetectDeath();
+    }
+
+    private void Dash()
+    {
+        if(!isDashing)
+        {
+            StartCoroutine(DashRoutine());
+        }
+    }
+
+    private  IEnumerator DashRoutine()
+    {
+        isDashing = true;
+        movingSpeed *= dashSpeed;
+        trailRenderer.emitting = true;
+        yield return new WaitForSeconds(dashTime);
+
+
+        trailRenderer.emitting = false;
+        movingSpeed = startMovingSpeed;
+        yield return new WaitForSeconds(dashCoolDownTime);
+        isDashing = false;
     }
 
     private void DetectDeath()
@@ -127,12 +169,23 @@ public class Player : MonoBehaviour
 
     private void GameInput_OnPlayerAttack(object sender, System.EventArgs e)
     {
-        ActiveWeapon.Instance.GetActiveWeapon().Attack();
+        if (canAttack)
+        {
+            ActiveWeapon.Instance.GetActiveWeapon().Attack();
+            StartCoroutine(AttackCoolDownTime());
+        }
     }
 
     private void OnDestroy()
     {
         GameInput.Instance.OnPlayerAttack -= GameInput_OnPlayerAttack;
+    }
+
+    private IEnumerator AttackCoolDownTime()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(attackCoolDownTime);
+        canAttack = true;
     }
 
 }

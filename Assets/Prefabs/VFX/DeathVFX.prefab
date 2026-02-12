@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7373592899600253018}
   - component: {fileID: 3536366575428164365}
   - component: {fileID: 3997138169589235609}
-  - component: {fileID: -7838928437455845255}
   m_Layer: 0
   m_Name: DeathVFX
   m_TagString: Untagged
@@ -44,7 +43,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 0.1
   simulationSpeed: 1
-  stopAction: 0
+  stopAction: 2
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -665,7 +664,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 0
+    type: 10
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -4895,15 +4894,3 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
---- !u!114 &-7838928437455845255
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3574570331525489613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adf06b1a20847104a9de5bd1e9646423, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SelfDestroyVFX
