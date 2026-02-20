@@ -167,15 +167,12 @@ public class EnemyAI : MonoBehaviour
 
     private void AttackingTarget()
     {
-
         if (Time.time > nextAttackTime)
         {
             OnEnemyAttack?.Invoke(this, EventArgs.Empty);
 
             nextAttackTime = Time.time + attackRate;
         }
-        
-       
     }
 
     private void MovementDirectionHandler()

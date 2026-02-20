@@ -63,19 +63,16 @@ public class SceletonVisual : MonoBehaviour
 
     public void TriggerAttackAnimOff()
     {
-
         enemyEntity.PolygonColliderOff();
     }
 
     public void TriggerAttackAnimOn()
     {
-
         enemyEntity.PolygonColliderOn();
     }
 
     private void enemyAI_OnEnemyAttack(object sender, EventArgs e)
     {
-        
         animator.SetTrigger(Attack);
     }
 }
