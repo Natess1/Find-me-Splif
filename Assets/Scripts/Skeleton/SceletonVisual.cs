@@ -51,7 +51,6 @@ public class SceletonVisual : MonoBehaviour
     private void enemyEntity_OnTakeHit(object sender, EventArgs e)
     {
         animator.SetTrigger(TakeHit);
-        
     }
 
     private void OnDestroy()
@@ -63,19 +62,16 @@ public class SceletonVisual : MonoBehaviour
 
     public void TriggerAttackAnimOff()
     {
-
         enemyEntity.PolygonColliderOff();
     }
 
     public void TriggerAttackAnimOn()
     {
-
         enemyEntity.PolygonColliderOn();
     }
 
     private void enemyAI_OnEnemyAttack(object sender, EventArgs e)
     {
-        
         animator.SetTrigger(Attack);
     }
 }

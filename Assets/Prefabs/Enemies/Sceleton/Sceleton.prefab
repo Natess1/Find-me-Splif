@@ -174,7 +174,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_MaskInteraction: 0
   m_Sprite: {fileID: -1344924201, guid: 54ad7afdb6c551041b3c494972286fdd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -426,10 +426,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
   startingState: 2
-  roamingDistanceMax: 7
+  roamingDistanceMax: 15
   roamingDistanceMin: 3
   roamingTimerMax: 10
-  chasingDistance: 5
+  chasingDistance: 10
   chasingSpeedMultiplier: 2
   attackingDistance: 2
   attackRate: 1

@@ -4,11 +4,14 @@ using FMS.Utils;
 using UnityEngine.InputSystem.XR.Haptics;
 using System;
 
+[SelectionBase]
+[RequireComponent(typeof(EnemyEntity))]
 public class EnemyAI : MonoBehaviour
 {
 
-    [SerializeField] private State startingState;
+    public event EventHandler OnEnemyAttack;
 
+    [SerializeField] private State startingState;
     [SerializeField] private float roamingDistanceMax = 7f;
     [SerializeField] private float roamingDistanceMin = 3f;
     [SerializeField] private float roamingTimerMax = 2f;
@@ -21,9 +24,10 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private bool isAttackingEnemy = false;
 
     private NavMeshAgent navMeshAgent;
+    private EnemyEntity enemyEntity;
     private State state;
     private Vector3 roamPos;
-    private Vector3 startingPos;
+    private Vector3 startingPosition;
     private Vector3 lastPos;
     private float roamingTime;
     private float roamingSpeed;
@@ -33,11 +37,10 @@ public class EnemyAI : MonoBehaviour
     private float nextCheckDirectionTime = 0f;
     private float checkDirectionDuration = 0.1f;
 
-    public event EventHandler OnEnemyAttack;
-
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        enemyEntity = GetComponent<EnemyEntity>();
         navMeshAgent.updateRotation = false;
         navMeshAgent.updateUpAxis = false;
         state = startingState;
@@ -53,7 +56,7 @@ public class EnemyAI : MonoBehaviour
     }
 
     public bool IsRunning => navMeshAgent.velocity != Vector3.zero;
-    
+
     public float GetRoamingSpeed()
     {
         return navMeshAgent.speed / roamingSpeed;
@@ -126,7 +129,7 @@ public class EnemyAI : MonoBehaviour
 
         if (isAttackingEnemy)
         {
-            if(distanceToPlayer <= attackingDistance)
+            if (distanceToPlayer <= attackingDistance)
             {
                 if (Player.Instance.IsAlive())
                 {
@@ -137,7 +140,7 @@ public class EnemyAI : MonoBehaviour
                     newState = State.Roaming;
                 }
             }
-            
+
         }
 
         if (newState != state)
@@ -162,20 +165,19 @@ public class EnemyAI : MonoBehaviour
 
     private void ChasingTarget()
     {
+        enemyEntity.PolygonColliderOff();
         navMeshAgent.SetDestination(Player.Instance.transform.position);
     }
 
     private void AttackingTarget()
     {
-
         if (Time.time > nextAttackTime)
         {
             OnEnemyAttack?.Invoke(this, EventArgs.Empty);
 
             nextAttackTime = Time.time + attackRate;
+
         }
-        
-       
     }
 
     private void MovementDirectionHandler()
@@ -198,14 +200,15 @@ public class EnemyAI : MonoBehaviour
 
     private void Roaming()
     {
-        startingPos = transform.position;
+
+        startingPosition = transform.position;
         roamPos = GetRoamingPosition();
         navMeshAgent.SetDestination(roamPos);
     }
 
     private Vector3 GetRoamingPosition()
     {
-        return startingPos + Utils.GetRandomDir() * UnityEngine.Random.Range(roamingDistanceMin, roamingDistanceMax);
+        return startingPosition + Utils.GetRandomDir() * UnityEngine.Random.Range(roamingDistanceMin, roamingDistanceMax);
     }
 
     private void ChangeFacingDir(Vector3 sourcePos, Vector3 targetPos)
@@ -220,8 +223,6 @@ public class EnemyAI : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, 0);
 
         }
-
     }
-
 
 }
