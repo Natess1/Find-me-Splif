@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using UnityEditor.Build.Content;
 
 public class Sword : MonoBehaviour
 {
