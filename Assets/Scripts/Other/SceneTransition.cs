@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+[RequireComponent(typeof(Animator))]
 public class SceneTransition : MonoBehaviour
 {
     public Text LoadingPercent;
@@ -46,7 +46,7 @@ public class SceneTransition : MonoBehaviour
             LoadingPercent.text = Mathf.RoundToInt(loadingSceneOperation.progress * 100) + "%";
 
             LoadingProgressBar.fillAmount = Mathf.Lerp(LoadingProgressBar.fillAmount, loadingSceneOperation.progress,
-                Time.deltaTime * 5);
+                Time.deltaTime * 1);
         }
     }
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+[RequireComponent(typeof(SceneTransition))]
 public class MainMenu : MonoBehaviour
 {
 
