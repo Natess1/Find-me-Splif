@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 
 [SelectionBase]
-public class Player : MonoBehaviour
+public class Player : Sounds
 {
     public static Player Instance { get; private set; }
 
@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
 
 
         GameInput.Instance.OnPlayerAttack += GameInput_OnPlayerAttack;
-         GameInput.Instance.OnPlayerDash += GameInput_OnPlayerDash;
+        GameInput.Instance.OnPlayerDash += GameInput_OnPlayerDash;
     }
 
     private void GameInput_OnPlayerDash(object sender, EventArgs e)
@@ -113,13 +113,14 @@ public class Player : MonoBehaviour
 
     private void Dash()
     {
-        if(!isDashing)
+        PlaySound(sounds[2]);
+        if (!isDashing)
         {
             StartCoroutine(DashRoutine());
         }
     }
 
-    private  IEnumerator DashRoutine()
+    private IEnumerator DashRoutine()
     {
         isDashing = true;
         movingSpeed *= dashSpeed;
@@ -135,7 +136,7 @@ public class Player : MonoBehaviour
 
     private void DetectDeath()
     {
-        if(currentHealth == 0 && isAlive)
+        if (currentHealth == 0 && isAlive)
         {
             isAlive = false;
 
