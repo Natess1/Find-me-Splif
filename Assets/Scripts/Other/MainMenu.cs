@@ -1,23 +1,22 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-
 public class MainMenu : MonoBehaviour
 {
+
     public void PlayGame()
     {
-        SceneManager.LoadScene("Level2");
+        SceneTransition.SwitchToScene("Level2");
     }
 
     public void LoadSettingsScene()
     {
-        SceneManager.LoadScene("SettingsScene");
+        SceneTransition.SwitchToScene("SettingsScene");
     }
 
     public void LoadMenuScene()
     {
-        SceneManager.LoadScene("MainMenu");
-
+        SceneTransition.SwitchToScene("MainMenu");
     }
     public void ExitGame()
     {

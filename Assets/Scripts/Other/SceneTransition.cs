@@ -15,7 +15,7 @@ public class SceneTransition : MonoBehaviour
 
     public static void SwitchToScene(string sceneName)
     {
-        instance.animator.SetTrigger("sceneEnd");
+        instance.animator.SetTrigger("Close");
 
         instance.loadingSceneOperation = SceneManager.LoadSceneAsync(sceneName);
 
@@ -32,7 +32,7 @@ public class SceneTransition : MonoBehaviour
 
         if (shouldPlayOpeningAnimation)
         {
-            animator.SetTrigger("sceneStart");
+            animator.SetTrigger("Open");
             instance.LoadingProgressBar.fillAmount = 1;
 
             shouldPlayOpeningAnimation = false;
@@ -53,7 +53,6 @@ public class SceneTransition : MonoBehaviour
     public void OnAnimationOver()
     {
         shouldPlayOpeningAnimation = true;
-
         loadingSceneOperation.allowSceneActivation = true;
     }
 }
