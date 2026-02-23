@@ -113,7 +113,6 @@ public class Player : Sounds
 
     private void Dash()
     {
-        PlaySound(sounds[2]);
         if (!isDashing)
         {
             StartCoroutine(DashRoutine());

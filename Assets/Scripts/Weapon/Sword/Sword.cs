@@ -30,7 +30,6 @@ public class Sword : MonoBehaviour
     public void Attack()
     {
         AttackColliderOfOn();
-
         OnSwordSWing?.Invoke(this, EventArgs.Empty);
     }
 

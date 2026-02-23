@@ -6,7 +6,7 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneTransition.SwitchToScene("Level2");
+        SceneTransition.SwitchToScene("Level1");
     }
 
     public void LoadSettingsScene()

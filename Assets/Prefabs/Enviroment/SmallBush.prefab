@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 145a4862b57c84045a366543f75b6df6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestructPlantsVisual
-  destructPlants: {fileID: 5948462391401058320}
+  destructablePlants: {fileID: 2293261919061151428}
   bushDeathVFX: {fileID: 889732262731230992, guid: a14cfff321817cf45878e672529190f3, type: 3}
 --- !u!1 &5669650034688077441
 GameObject:
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 586776929801775137}
   - component: {fileID: 5964021790638877409}
   - component: {fileID: 7675686423635448563}
-  - component: {fileID: 5948462391401058320}
+  - component: {fileID: 2293261919061151428}
   m_Layer: 0
   m_Name: SmallBush
   m_TagString: Untagged
@@ -254,7 +254,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.027559731, y: 0.24844587}
   m_Size: {x: 0.8681983, y: 0.71003926}
   m_Direction: 1
---- !u!114 &5948462391401058320
+--- !u!114 &2293261919061151428
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -1,6 +1,6 @@
 using UnityEngine;
 using NavMeshPlus.Components;
-
+[RequireComponent(typeof(NavMeshSurface))]
 public class NavSurfManagment : MonoBehaviour
 {
     public static NavSurfManagment Instance { get; private set; }
@@ -13,7 +13,6 @@ public class NavSurfManagment : MonoBehaviour
         navMeshSurface = GetComponent<NavMeshSurface>();
 
         navMeshSurface.hideEditorLogs = true;
-
     }
 
     public void RebakeNavMashSurface()
@@ -21,4 +20,4 @@ public class NavSurfManagment : MonoBehaviour
         navMeshSurface.BuildNavMesh();
     }
 
-} 
+}

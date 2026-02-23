@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-
 public class DestructPlants : MonoBehaviour
 {
     public event EventHandler OnDestructTakeDamage;
@@ -11,7 +10,6 @@ public class DestructPlants : MonoBehaviour
         {
             OnDestructTakeDamage?.Invoke(this, EventArgs.Empty);
             Destroy(gameObject);
-
             NavSurfManagment.Instance.RebakeNavMashSurface();
         }
     }

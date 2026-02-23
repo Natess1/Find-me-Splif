@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8109365499943262435}
   - component: {fileID: 1362894954603663619}
   - component: {fileID: 3184128719164211342}
-  - component: {fileID: 6598712787811481509}
+  - component: {fileID: 5922376368025040997}
   m_Layer: 0
   m_Name: Bush
   m_TagString: Untagged
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Center: {x: 0.0045677423, y: 0.36509, z: 0}
   m_Area: 1
   m_AffectedAgents: ffffffff
---- !u!114 &6598712787811481509
+--- !u!114 &5922376368025040997
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -204,5 +204,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 145a4862b57c84045a366543f75b6df6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestructPlantsVisual
-  destructPlants: {fileID: 6598712787811481509}
+  destructablePlants: {fileID: 5922376368025040997}
   bushDeathVFX: {fileID: 889732262731230992, guid: a14cfff321817cf45878e672529190f3, type: 3}
