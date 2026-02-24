@@ -1,4 +1,6 @@
 using System;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,13 +8,18 @@ public class GameInput : MonoBehaviour
 {
     public static GameInput Instance { get; private set; }
 
+    [SerializeField] private TMP_Text moneyCounter;
+    [SerializeField] private TMP_Text heartCounter;
+
     public event EventHandler OnPlayerAttack;
     public event EventHandler OnPlayerDash;
     public event EventHandler OnPlayerLoot;
 
     private PlayerInputActions playerInputActions;
 
-    private int money;
+    private int money = 0;
+
+    private int currentMoney;
 
     private void Awake()
     {
@@ -21,28 +28,35 @@ public class GameInput : MonoBehaviour
         playerInputActions = new PlayerInputActions();
         playerInputActions.Enable();
 
+
         playerInputActions.Combat.Attack.started += PlayerAttack_started;
 
         playerInputActions.Player.Loot.started += PlayerLoot_started;
 
         playerInputActions.Player.Dash.performed += PlayerDashPerformed;
-
     }
 
-    private void PlayerLoot_started(InputAction.CallbackContext context)
+    void Update()
     {
-        OnPlayerLoot?.Invoke(this, EventArgs.Empty);
+        moneyCounter.text = PlayerPrefs.GetInt("money").ToString();
+        heartCounter.text = PlayerPrefs.GetInt("health").ToString();
     }
-
-    private void PlayerDashPerformed(InputAction.CallbackContext context)
-    {
-        OnPlayerDash?.Invoke(this, EventArgs.Empty);
-    }
-
     public int GetMoney()
     {
-        int currentMoney = money;
-        return currentMoney;
+        Debug.Log(money);
+        return money;
+    }
+
+    public void AddMoney(int addingMoney)
+    {
+        money = PlayerPrefs.GetInt("money");
+        PlayerPrefs.SetInt("money", money + addingMoney);
+    }
+
+    public void RemoveMoney(int removingMoney)
+    {
+        money = PlayerPrefs.GetInt("money");
+        PlayerPrefs.SetInt("money", money - removingMoney);
     }
 
     public Vector2 GetMovementVector()
@@ -68,6 +82,16 @@ public class GameInput : MonoBehaviour
         return mousePos;
     }
 
+
+    private void PlayerLoot_started(InputAction.CallbackContext context)
+    {
+        OnPlayerLoot?.Invoke(this, EventArgs.Empty);
+    }
+
+    private void PlayerDashPerformed(InputAction.CallbackContext context)
+    {
+        OnPlayerDash?.Invoke(this, EventArgs.Empty);
+    }
 
     private void PlayerAttack_started(InputAction.CallbackContext obj)
     {

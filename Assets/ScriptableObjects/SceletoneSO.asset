@@ -15,3 +15,4 @@ MonoBehaviour:
   enemyName: Sceletone
   enemyHealth: 10
   enemyDamageAmount: 1
+  haveMoney: 10

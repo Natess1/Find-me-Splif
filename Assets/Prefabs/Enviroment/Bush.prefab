@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 693ec0212db8a6847adfaed406409303, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DestructPlants
+  haveMoney: 1
 --- !u!1 &4913889633835020448
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,6 +25,7 @@ public class EnemyAI : MonoBehaviour
 
     private NavMeshAgent navMeshAgent;
     private EnemyEntity enemyEntity;
+    private EnemySO enemySO;
     private State state;
     private Vector3 roamPos;
     private Vector3 startingPosition;
@@ -102,7 +103,6 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             case State.Death:
-
                 break;
 
             default:

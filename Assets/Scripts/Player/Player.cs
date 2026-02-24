@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using System;
 using System.Collections;
+using UnityEditor;
 
 [SelectionBase]
 public class Player : Sounds
@@ -17,10 +18,12 @@ public class Player : Sounds
     [SerializeField] private int maxHealth = 10;
     [SerializeField] private float damageRecoveryTime = 0.5f;
     [SerializeField] private float attackCoolDownTime = 0.3f;
+
     [Header("Dash Settings")]
     [SerializeField] private int dashSpeed = 5;
     [SerializeField] private float dashTime = 0.4f;
     [SerializeField] private float dashCoolDownTime = 3f;
+
     [Header("Other")]
     [SerializeField] private TrailRenderer trailRenderer;
 
@@ -33,6 +36,7 @@ public class Player : Sounds
     private readonly float minMovingSpeed = 0.1f;
     private float startMovingSpeed;
     private int currentHealth;
+    private int savingHealth;
 
     private bool canTakeDamage;
     private bool isRunning = false;
@@ -40,12 +44,16 @@ public class Player : Sounds
     private bool isDashing;
     private bool canAttack;
 
+
     private void Awake()
     {
-        rigidBody = GetComponent<Rigidbody2D>();
-        mainCamera = Camera.main;
         Instance = this;
+        currentHealth = maxHealth;
+
+
+        rigidBody = GetComponent<Rigidbody2D>();
         KnockBack = GetComponent<KnockBack>();
+        mainCamera = Camera.main;
 
         startMovingSpeed = movingSpeed;
     }
@@ -53,6 +61,9 @@ public class Player : Sounds
     private void Update()
     {
         InputVector = GameInput.Instance.GetMovementVector();
+        savingHealth = currentHealth;
+
+        PlayerPrefs.SetInt("health", savingHealth);
     }
 
     private void FixedUpdate()
@@ -66,11 +77,10 @@ public class Player : Sounds
 
     private void Start()
     {
-        currentHealth = maxHealth;
+
         canTakeDamage = true;
         canAttack = true;
         isAlive = true;
-
 
         GameInput.Instance.OnPlayerAttack += GameInput_OnPlayerAttack;
         GameInput.Instance.OnPlayerDash += GameInput_OnPlayerDash;
@@ -86,6 +96,9 @@ public class Player : Sounds
         return isRunning;
     }
 
+    public bool IsAlive() => isAlive;
+
+
     public Vector3 GetPlayerScreenPosition()
     {
         Vector3 screenPlayerPos = mainCamera.WorldToScreenPoint(transform.position);
@@ -93,7 +106,6 @@ public class Player : Sounds
         return screenPlayerPos;
     }
 
-    public bool IsAlive() => isAlive;
 
     public void TakeDamage(Transform damageSource, int damage)
     {
@@ -107,6 +119,7 @@ public class Player : Sounds
 
             StartCoroutine(DamageRecoveryCoroutine());
         }
+        savingHealth = currentHealth;
 
         DetectDeath();
     }
@@ -115,7 +128,10 @@ public class Player : Sounds
     {
         if (!isDashing)
         {
-            StartCoroutine(DashRoutine());
+            if (Instance != null)
+            {
+                StartCoroutine(DashRoutine());
+            }
         }
     }
 
@@ -143,7 +159,10 @@ public class Player : Sounds
             GameInput.Instance.DisableMovement();
 
             OnPlayerDeath?.Invoke(this, EventArgs.Empty);
+
         }
+        savingHealth = currentHealth;
+
     }
 
     private IEnumerator DamageRecoveryCoroutine()

@@ -107,7 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifierVolume
   m_Size: {x: 1.0533466, y: 1.3818378, z: 4}
   m_Center: {x: 0.014983177, y: -0.28853607, z: 0}
-  m_Area: 0
+  m_Area: 1
   m_AffectedAgents: ffffffff
 --- !u!70 &7310007377100549724
 CapsuleCollider2D:

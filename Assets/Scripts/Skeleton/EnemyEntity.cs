@@ -65,6 +65,8 @@ public class EnemyEntity : MonoBehaviour
             enemyAI.SetDeathState();
 
             OnDeath?.Invoke(this, EventArgs.Empty);
+            GameInput.Instance.AddMoney(enemySO.haveMoney);
+
         }
     }
 
