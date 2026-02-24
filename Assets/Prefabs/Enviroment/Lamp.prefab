@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5504762238881995715}
   - component: {fileID: 30910726014433671}
   - component: {fileID: 5879513680876205817}
+  - component: {fileID: 4094955691963265320}
+  - component: {fileID: 1657515143576775033}
   m_Layer: 0
   m_Name: Lamp
   m_TagString: Untagged
@@ -146,3 +148,54 @@ MonoBehaviour:
   m_Center: {x: 0.01756668, y: 0.2202406, z: 0}
   m_Area: 1
   m_AffectedAgents: ffffffff
+--- !u!114 &4094955691963265320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6679392783574148124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79cc23037b33182498cbc6490903d970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
+  transparancyAmount: 0.5
+  transparancySpeed: 0.5
+--- !u!70 &1657515143576775033
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6679392783574148124}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.15620232, y: 1.6209261}
+  m_Size: {x: 1.6160164, y: 2.1680331}
+  m_Direction: 0
