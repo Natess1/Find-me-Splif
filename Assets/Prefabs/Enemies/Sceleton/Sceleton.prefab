@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5757764950140454185}
   - component: {fileID: 5092296893528673415}
   m_Layer: 0
-  m_Name: SceletonShadow
+  m_Name: GoblinShadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,8 +26,8 @@ Transform:
   m_GameObject: {fileID: 1581118175488761654}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.9990004, z: -0, w: 0.044701934}
-  m_LocalPosition: {x: 0.134, y: 0.052, z: 0}
-  m_LocalScale: {x: 1.4125, y: 0.9039062, z: 1}
+  m_LocalPosition: {x: -0.097, y: -0.106, z: 0}
+  m_LocalScale: {x: 1.8471414, y: 0.9039062, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4822462566773764266}
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 100
   m_MaskInteraction: 0
   m_Sprite: {fileID: 1756577300, guid: 4760719cb7ea7e94ea13f7658d144776, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 6466987130902899579}
   - component: {fileID: 4098871487451537758}
   m_Layer: 0
-  m_Name: SceletonVisual
+  m_Name: GoblinVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -174,9 +174,9 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
+  m_SortingOrder: 100
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -1344924201, guid: 54ad7afdb6c551041b3c494972286fdd, type: 3}
+  m_Sprite: {fileID: 138843905, guid: 287224065e62b374f95bd93e5599899a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -223,7 +223,7 @@ Animator:
   m_GameObject: {fileID: 3112892539644532057}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 07b87fda3a27c654a8f93990ab215e79, type: 2}
+  m_Controller: {fileID: 9100000, guid: acb198bda9a6b564f9fc3a8c82842d7e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -297,7 +297,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.6
-  m_Speed: 0.5
+  m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -401,17 +401,19 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 1.0428283, y: 2.6544871}
-      - {x: 1.3804431, y: 2.1643903}
-      - {x: 1.0899594, y: 1.7588109}
-      - {x: 0.9289639, y: 1.2940491}
-      - {x: 0.6934034, y: 1.2415462}
-      - {x: -0.046316683, y: 0.8454701}
-      - {x: 0.84849226, y: 0.4544096}
-      - {x: 2.0457544, y: 0.38610548}
-      - {x: 3.4520679, y: 0.9647203}
-      - {x: 3.7285888, y: 1.582471}
-      - {x: 3.1670668, y: 2.4849186}
+    - - {x: 0.20172238, y: 2.1769934}
+      - {x: -0.17157602, y: 2.235685}
+      - {x: -0.9106221, y: 2.3466134}
+      - {x: -2.0108373, y: 2.6044827}
+      - {x: -2.8342755, y: 2.4638953}
+      - {x: -2.745662, y: 1.974462}
+      - {x: -0.074505866, y: 0.29578364}
+      - {x: 0.5909244, y: -0.5033951}
+      - {x: 2.3799815, y: -0.07991129}
+      - {x: 2.8178144, y: 0.37275124}
+      - {x: 2.5764112, y: 0.81102705}
+      - {x: 1.1851888, y: 1.817687}
+      - {x: 0.76730585, y: 2.0492582}
   m_UseDelaunayMesh: 1
 --- !u!114 &5886432349842586450
 MonoBehaviour:
@@ -430,9 +432,9 @@ MonoBehaviour:
   roamingDistanceMin: 3
   roamingTimerMax: 10
   chasingDistance: 10
-  chasingSpeedMultiplier: 2
-  attackingDistance: 2
-  attackRate: 1
+  chasingSpeedMultiplier: 3
+  attackingDistance: 3
+  attackRate: 0.5
   isChaisingEnemy: 1
   isAttackingEnemy: 1
 --- !u!114 &7252226877797124006
@@ -447,4 +449,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d919c7f7f91fa3409744fa4b2f7aa68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyEntity
-  enemySO: {fileID: 11400000, guid: 74c4899b4b598f04290ab75d685d626e, type: 2}
+  enemySO: {fileID: 11400000, guid: 0054e1973c460784f8a31b5a7547ed35, type: 2}
