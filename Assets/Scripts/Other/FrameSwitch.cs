@@ -6,19 +6,25 @@ public class FrameSwitch : MonoBehaviour
     [SerializeField] private MonoBehaviour transitionObject;
 
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collider)
     {
-        if (transitionObject is Player)
+        if (collider.gameObject.GetComponent<Player>())
         {
-            activeFrame.SetActive(true);
+            if (collider is CapsuleCollider2D)
+            {
+                activeFrame.SetActive(true);
+            }
         }
     }
 
-    void OnTriggerExit2D(Collider2D collision)
+    void OnTriggerExit2D(Collider2D collider)
     {
-        if (transitionObject is Player)
+        if (collider.gameObject.GetComponent<Player>())
         {
-            activeFrame.SetActive(false);
+            if (collider is CapsuleCollider2D)
+            {
+                activeFrame.SetActive(false);
+            }
         }
     }
 }
