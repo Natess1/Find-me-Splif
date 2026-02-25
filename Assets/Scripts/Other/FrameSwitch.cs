@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class FrameSwitch : MonoBehaviour
 {
-    public GameObject activeFrame;
     [SerializeField] private MonoBehaviour transitionObject;
+    public GameObject activeFrame;
 
+    private const string OPPENING = "openingLocate";
+    private const string CLOSING = "closingLocate";
 
     void OnTriggerEnter2D(Collider2D collider)
     {
@@ -23,6 +25,7 @@ public class FrameSwitch : MonoBehaviour
         {
             if (collider is CapsuleCollider2D)
             {
+
                 activeFrame.SetActive(false);
             }
         }

@@ -183,7 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: NavMeshPlus::NavMeshPlus.Components.NavMeshModifierVolume
   m_Size: {x: 0.86608124, y: 0.3609085, z: 4}
   m_Center: {x: 0.0117816925, y: -1.2149515, z: 0}
-  m_Area: 0
+  m_Area: 1
   m_AffectedAgents: ffffffff
 --- !u!114 &3317593622910987878
 MonoBehaviour:

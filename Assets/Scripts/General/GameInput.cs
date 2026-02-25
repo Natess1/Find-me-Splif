@@ -70,7 +70,7 @@ public class GameInput : MonoBehaviour
         playerInputActions.Disable();
     }
 
-    public void ActivateMovement()
+    public void EnableMovement()
     {
         playerInputActions.Enable();
     }

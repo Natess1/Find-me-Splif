@@ -23,8 +23,8 @@ public class PlayerVisual : MonoBehaviour
     private void Start()
     {
         Player.Instance.OnPlayerDeath += Player_OnPlayerDeath;
-
     }
+
 
     private void Update()
     {
@@ -52,7 +52,6 @@ public class PlayerVisual : MonoBehaviour
     private void OnDestroy()
     {
         Player.Instance.OnPlayerDeath -= Player_OnPlayerDeath;
-
     }
 
 

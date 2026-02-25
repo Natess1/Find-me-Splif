@@ -4,6 +4,7 @@ using UnityEngine.Rendering;
 using System;
 using System.Collections;
 using UnityEditor;
+using NUnit.Framework.Constraints;
 
 [SelectionBase]
 public class Player : Sounds
@@ -26,6 +27,8 @@ public class Player : Sounds
 
     [Header("Other")]
     [SerializeField] private TrailRenderer trailRenderer;
+    public PlayerPosition pos;
+
 
 
     Vector2 InputVector;
@@ -48,7 +51,7 @@ public class Player : Sounds
     private void Awake()
     {
         Instance = this;
-        currentHealth = maxHealth;
+        currentHealth = PlayerPrefs.GetInt("health");
 
 
         rigidBody = GetComponent<Rigidbody2D>();
@@ -77,6 +80,8 @@ public class Player : Sounds
 
     private void Start()
     {
+        transform.position = pos.initialValue;
+        currentHealth = maxHealth;
 
         canTakeDamage = true;
         canAttack = true;
@@ -154,12 +159,14 @@ public class Player : Sounds
         if (currentHealth == 0 && isAlive)
         {
             isAlive = false;
+            int allMoney = PlayerPrefs.GetInt("money");
+            GameInput.Instance.RemoveMoney(allMoney);
 
             KnockBack.StopKnockBackMov();
             GameInput.Instance.DisableMovement();
 
             OnPlayerDeath?.Invoke(this, EventArgs.Empty);
-
+            SceneTransition.SwitchToScene("DeathScene");
         }
         savingHealth = currentHealth;
 
