@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7120796244636598027}
   - component: {fileID: 4226206227249777206}
   - component: {fileID: 7590305471170937626}
+  - component: {fileID: 528496508343842372}
+  - component: {fileID: 3643679003656319973}
   m_Layer: 0
   m_Name: Small tree 1
   m_TagString: Untagged
@@ -123,13 +125,13 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.0151901245, y: 0.83108044}
-  m_Size: {x: 2, y: 2}
-  m_Direction: 0
+  m_Offset: {x: -0.015190132, y: 0.9514084}
+  m_Size: {x: 2.3027587, y: 1.7282994}
+  m_Direction: 1
 --- !u!114 &7590305471170937626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,3 +148,54 @@ MonoBehaviour:
   m_Center: {x: 0.001126647, y: 0.82431746, z: 0}
   m_Area: 1
   m_AffectedAgents: ffffffff
+--- !u!70 &528496508343842372
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2720289673050242392}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.0307166, y: 0.014756357}
+  m_Size: {x: 0.8510767, y: 0.34931073}
+  m_Direction: 1
+--- !u!114 &3643679003656319973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2720289673050242392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79cc23037b33182498cbc6490903d970, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
+  transparancyAmount: 0.3
+  transparancySpeed: 0.5

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb80b6999852a040ac771d6dadad491, type: 3}
   m_Name: Player Position
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPosition
-  playerPosition: {x: 0, y: 0, z: 0}
+  playerPosition: {x: -20, y: 6.5, z: 0}

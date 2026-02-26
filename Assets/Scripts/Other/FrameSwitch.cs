@@ -5,9 +5,6 @@ public class FrameSwitch : MonoBehaviour
     [SerializeField] private MonoBehaviour transitionObject;
     public GameObject activeFrame;
 
-    private const string OPPENING = "openingLocate";
-    private const string CLOSING = "closingLocate";
-
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.gameObject.GetComponent<Player>())
