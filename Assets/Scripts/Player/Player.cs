@@ -27,7 +27,6 @@ public class Player : Sounds
 
     [Header("Other")]
     [SerializeField] private TrailRenderer trailRenderer;
-    public PlayerPosition pos;
 
 
 
@@ -80,7 +79,6 @@ public class Player : Sounds
 
     private void Start()
     {
-        transform.position = pos.initialValue;
         currentHealth = maxHealth;
 
         canTakeDamage = true;
