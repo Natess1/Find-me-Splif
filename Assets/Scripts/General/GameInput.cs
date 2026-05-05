@@ -19,7 +19,6 @@ public class GameInput : MonoBehaviour
 
     private int money = 0;
 
-    private int currentMoney;
 
     private void Awake()
     {

@@ -3,6 +3,9 @@ using UnityEngine;
 public class MainMenu : MonoBehaviour
 {
 
+
+
+
     public void PlayGame()
     {
         SceneTransition.SwitchToScene("NewPlayScene");
@@ -13,11 +16,11 @@ public class MainMenu : MonoBehaviour
         SceneTransition.SwitchToScene("SettingsScene");
     }
 
-    public void LoadTradeScene()
+    public void ShowTradeMenu()
     {
-        SceneTransition.SwitchToScene("TradeScene");
-    }
+        GameInput.Instance.DisableMovement();
 
+    }
     public void LoadMenuScene()
     {
         SceneTransition.SwitchToScene("MainMenu");
