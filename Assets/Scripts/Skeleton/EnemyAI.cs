@@ -8,8 +8,8 @@ using System;
 [RequireComponent(typeof(EnemyEntity))]
 public class EnemyAI : MonoBehaviour
 {
-
     public event EventHandler OnEnemyAttack;
+
 
     [SerializeField] private State startingState;
     [SerializeField] private float roamingDistanceMax = 7f;
@@ -25,7 +25,6 @@ public class EnemyAI : MonoBehaviour
 
     private NavMeshAgent navMeshAgent;
     private EnemyEntity enemyEntity;
-    private EnemySO enemySO;
     private State state;
     private Vector3 roamPos;
     private Vector3 startingPosition;

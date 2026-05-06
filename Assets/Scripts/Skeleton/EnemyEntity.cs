@@ -11,6 +11,7 @@ public class EnemyEntity : MonoBehaviour
     [SerializeField] private EnemySO enemySO;
     public event EventHandler OnTakeHit;
     public event EventHandler OnDeath;
+    public event EventHandler OnBossDeath;
 
     private PolygonCollider2D polygonCollider2D;
     private BoxCollider2D boxCollider2D;
@@ -66,6 +67,12 @@ public class EnemyEntity : MonoBehaviour
 
             OnDeath?.Invoke(this, EventArgs.Empty);
             GameInput.Instance.AddMoney(enemySO.haveMoney);
+
+            if (CompareTag("Boss"))
+            {
+                Debug.Log("thdfgfdg");
+                OnBossDeath?.Invoke(this, EventArgs.Empty);
+            }
 
         }
     }

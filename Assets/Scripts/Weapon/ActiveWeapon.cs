@@ -6,7 +6,7 @@ public class ActiveWeapon : MonoBehaviour
 {
     public static ActiveWeapon Instance { get; private set; }
     [SerializeField] private Sword activeSword;
-    [SerializeField] private Sword nonActiveSword;
+    private Sword nonActiveSword;
 
     private int currentSword;
 

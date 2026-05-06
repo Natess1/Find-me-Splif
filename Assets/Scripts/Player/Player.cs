@@ -5,6 +5,8 @@ using System;
 using System.Collections;
 using UnityEditor;
 using NUnit.Framework.Constraints;
+using Microsoft.Unity.VisualStudio.Editor;
+using UnityEngine.UI;
 
 [SelectionBase]
 public class Player : Sounds
@@ -20,6 +22,7 @@ public class Player : Sounds
     [SerializeField] private float damageRecoveryTime = 0.5f;
     [SerializeField] private float attackCoolDownTime = 0.3f;
 
+
     [Header("Dash Settings")]
     [SerializeField] private int dashSpeed = 5;
     [SerializeField] private float dashTime = 0.4f;
@@ -27,6 +30,7 @@ public class Player : Sounds
 
     [Header("Other")]
     [SerializeField] private TrailRenderer trailRenderer;
+    [SerializeField] UnityEngine.UI.Image fadeScreen;
 
 
 
@@ -37,6 +41,7 @@ public class Player : Sounds
 
     private readonly float minMovingSpeed = 0.1f;
     private float startMovingSpeed;
+    private float flashRemaining;
     private int currentHealth;
     private int savingHealth;
 
@@ -66,6 +71,13 @@ public class Player : Sounds
         savingHealth = currentHealth;
 
         PlayerPrefs.SetInt("health", savingHealth);
+
+        if (flashRemaining > 0)
+        {
+            flashRemaining -= Time.deltaTime;
+            float alpha = Mathf.Lerp(0.4f, 0f, 1f - flashRemaining / 0.2f);
+            fadeScreen.color = new Color(1, 0, 0, alpha);
+        }
     }
 
     private void FixedUpdate()
@@ -123,7 +135,7 @@ public class Player : Sounds
             StartCoroutine(DamageRecoveryCoroutine());
         }
         savingHealth = currentHealth;
-
+        flashRemaining = 0.4f;
         DetectDeath();
     }
 

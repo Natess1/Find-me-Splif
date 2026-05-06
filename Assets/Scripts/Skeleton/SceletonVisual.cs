@@ -40,6 +40,15 @@ public class SceletonVisual : MonoBehaviour
         enemyEntity.OnTakeHit += enemyEntity_OnTakeHit;
         enemyEntity.OnDeath += enemyEntity_OnDeath;
     }
+    public void TriggerAttackAnimOff()
+    {
+        enemyEntity.PolygonColliderOff();
+    }
+
+    public void TriggerAttackAnimOn()
+    {
+        enemyEntity.PolygonColliderOn();
+    }
 
     private void enemyEntity_OnDeath(object sender, EventArgs e)
     {
@@ -60,15 +69,6 @@ public class SceletonVisual : MonoBehaviour
         enemyEntity.OnDeath -= enemyEntity_OnDeath;
     }
 
-    public void TriggerAttackAnimOff()
-    {
-        enemyEntity.PolygonColliderOff();
-    }
-
-    public void TriggerAttackAnimOn()
-    {
-        enemyEntity.PolygonColliderOn();
-    }
 
     private void enemyAI_OnEnemyAttack(object sender, EventArgs e)
     {
