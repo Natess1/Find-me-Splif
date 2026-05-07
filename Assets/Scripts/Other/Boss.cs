@@ -14,7 +14,6 @@ public class Boss : MonoBehaviour
 
     private void Boss_OnBossDeath(object sender, EventArgs e)
     {
-        Debug.Log("Boss dead");
         OpenDoor();
     }
 

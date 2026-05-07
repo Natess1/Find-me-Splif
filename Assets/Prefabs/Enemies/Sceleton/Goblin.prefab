@@ -450,3 +450,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyEntity
   enemySO: {fileID: 11400000, guid: 0054e1973c460784f8a31b5a7547ed35, type: 2}
+  destroyDeadBody: 20

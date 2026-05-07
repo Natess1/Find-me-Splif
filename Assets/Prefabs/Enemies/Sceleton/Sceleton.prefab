@@ -202,6 +202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyEntity
   enemySO: {fileID: 11400000, guid: 74c4899b4b598f04290ab75d685d626e, type: 2}
+  destroyDeadBody: 20
 --- !u!1 &1840005095628595905
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ public class SpawnZone : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             isActive = true;
-            spawnTimer = spawnInterval; // чтобы начать сразу
+            spawnTimer = spawnInterval;
         }
     }
 

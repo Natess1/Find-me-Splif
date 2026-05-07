@@ -11,10 +11,7 @@ public class SceletonVisual : MonoBehaviour
     [SerializeField] private GameObject sceletonShadow;
 
     private Animator animator;
-
-
-
-    SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRenderer;
 
     private static readonly int Running = Animator.StringToHash("IsRunning");
     private static readonly int ChasingSpeedMultiplier = Animator.StringToHash("ChaisingSpeedMultiplier");
@@ -55,11 +52,16 @@ public class SceletonVisual : MonoBehaviour
         animator.SetBool(Die, true);
         spriteRenderer.sortingOrder = -1;
         sceletonShadow.SetActive(false);
+
     }
 
     private void enemyEntity_OnTakeHit(object sender, EventArgs e)
     {
         animator.SetTrigger(TakeHit);
+    }
+    private void enemyAI_OnEnemyAttack(object sender, EventArgs e)
+    {
+        animator.SetTrigger(Attack);
     }
 
     private void OnDestroy()
@@ -70,8 +72,4 @@ public class SceletonVisual : MonoBehaviour
     }
 
 
-    private void enemyAI_OnEnemyAttack(object sender, EventArgs e)
-    {
-        animator.SetTrigger(Attack);
-    }
 }

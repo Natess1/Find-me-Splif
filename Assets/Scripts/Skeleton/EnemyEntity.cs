@@ -9,6 +9,8 @@ using UnityEngine;
 public class EnemyEntity : MonoBehaviour
 {
     [SerializeField] private EnemySO enemySO;
+    [SerializeField] private float destroyDeadBody = 5f;
+
     public event EventHandler OnTakeHit;
     public event EventHandler OnDeath;
     public event EventHandler OnBossDeath;
@@ -16,14 +18,33 @@ public class EnemyEntity : MonoBehaviour
     private PolygonCollider2D polygonCollider2D;
     private BoxCollider2D boxCollider2D;
     private EnemyAI enemyAI;
+    private bool isDeath = false;
 
     private int currentHealth;
+    private float dieTimer = 0f;
+
 
     private void Awake()
     {
         polygonCollider2D = GetComponent<PolygonCollider2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         enemyAI = GetComponent<EnemyAI>();
+    }
+
+    private void Update()
+    {
+        if (!CompareTag("Boss"))
+        {
+            if (isDeath)
+            {
+                dieTimer += Time.deltaTime;
+
+                if (dieTimer >= destroyDeadBody)
+                {
+                    Destroy(this.gameObject);
+                }
+            }
+        }
     }
 
     private void Start()
@@ -57,6 +78,7 @@ public class EnemyEntity : MonoBehaviour
         polygonCollider2D.enabled = true;
     }
 
+
     private void CheckDeath()
     {
         if (currentHealth <= 0)
@@ -70,13 +92,12 @@ public class EnemyEntity : MonoBehaviour
 
             if (CompareTag("Boss"))
             {
-                Debug.Log("thdfgfdg");
                 OnBossDeath?.Invoke(this, EventArgs.Empty);
             }
 
+            isDeath = true;
         }
     }
-
 
 
 
