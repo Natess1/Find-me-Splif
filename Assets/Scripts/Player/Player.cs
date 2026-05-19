@@ -5,7 +5,6 @@ using System;
 using System.Collections;
 using UnityEditor;
 using NUnit.Framework.Constraints;
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine.UI;
 
 [SelectionBase]

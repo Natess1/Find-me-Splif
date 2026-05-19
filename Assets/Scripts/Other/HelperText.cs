@@ -14,7 +14,6 @@ public class HelperText : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player entered");
             helper.gameObject.SetActive(true);
         }
     }
@@ -23,8 +22,6 @@ public class HelperText : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-
-            Debug.Log("Player exited");
             helper.gameObject.SetActive(false);
         }
     }
