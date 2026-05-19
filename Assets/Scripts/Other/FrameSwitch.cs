@@ -12,7 +12,6 @@ public class FrameSwitch : MonoBehaviour
             if (collider is CapsuleCollider2D)
             {
                 activeFrame.SetActive(true);
-                Debug.Log("Player entered frame switch trigger");
                 NavSurfManagment.Instance.RebakeNavMashSurface();
             }
         }

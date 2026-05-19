@@ -3,6 +3,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class GameInput : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class GameInput : MonoBehaviour
 
         playerInputActions.Player.Dash.performed += PlayerDashPerformed;
     }
+
+
 
     void Update()
     {
