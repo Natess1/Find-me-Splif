@@ -16,7 +16,7 @@ public class Player : Sounds
     public event EventHandler OnPlayerBlink;
 
     [Header("Player Settings")]
-    [SerializeField] private float movingSpeed = 5f;
+    [SerializeField] public float movingSpeed = 5f;
     [SerializeField] private int maxHealth = 10;
     [SerializeField] private float damageRecoveryTime = 0.5f;
     [SerializeField] private float attackCoolDownTime = 0.3f;
@@ -30,15 +30,19 @@ public class Player : Sounds
     [Header("Other")]
     [SerializeField] private TrailRenderer trailRenderer;
     [SerializeField] UnityEngine.UI.Image fadeScreen;
+    [SerializeField] private Joystick joystick;
+
 
 
 
     Vector2 InputVector;
+
     private Rigidbody2D rigidBody;
     private KnockBack KnockBack;
     private Camera mainCamera;
 
     private readonly float minMovingSpeed = 0.1f;
+    private float dirX, dirY;
     private float startMovingSpeed;
     private float flashRemaining;
     private int currentHealth;
@@ -66,7 +70,8 @@ public class Player : Sounds
 
     private void Update()
     {
-        InputVector = GameInput.Instance.GetMovementVector();
+        InputVector = GameInput.Instance.GetJoysticVector(joystick);
+
         savingHealth = currentHealth;
 
         PlayerPrefs.SetInt("health", savingHealth);
@@ -77,6 +82,8 @@ public class Player : Sounds
             float alpha = Mathf.Lerp(0.4f, 0f, 1f - flashRemaining / 0.2f);
             fadeScreen.color = new Color(1, 0, 0, alpha);
         }
+
+
     }
 
     private void FixedUpdate()
@@ -200,6 +207,7 @@ public class Player : Sounds
         {
             isRunning = false;
         }
+
     }
 
     private void GameInput_OnPlayerAttack(object sender, System.EventArgs e)

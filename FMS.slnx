@@ -4,4 +4,5 @@
   <Project Path="NavMeshPlusEditor.csproj" />
   <Project Path="Unity.Cinemachine.csproj" />
   <Project Path="NavMeshPlus.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
 </Solution>

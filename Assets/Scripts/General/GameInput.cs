@@ -11,6 +11,7 @@ public class GameInput : MonoBehaviour
 
     [SerializeField] private TMP_Text moneyCounter;
     [SerializeField] private TMP_Text heartCounter;
+    [SerializeField] private Joystick joystick;
 
     public event EventHandler OnPlayerAttack;
     public event EventHandler OnPlayerDash;
@@ -65,6 +66,12 @@ public class GameInput : MonoBehaviour
     {
         Vector2 inputVector = playerInputActions.Player.move.ReadValue<Vector2>();
         return inputVector;
+    }
+
+    public Vector2 GetJoysticVector(Joystick joystick)
+    {
+        Vector2 JoysticVector = new(joystick.Horizontal, joystick.Vertical);
+        return JoysticVector;
     }
 
     public void DisableMovement()
