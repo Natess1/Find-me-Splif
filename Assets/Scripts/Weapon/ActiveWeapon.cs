@@ -6,6 +6,8 @@ public class ActiveWeapon : MonoBehaviour
 {
     public static ActiveWeapon Instance { get; private set; }
     [SerializeField] private Sword activeSword;
+    [SerializeField] private Joystick joystick;
+
     private Sword nonActiveSword;
 
     private int currentSword;
@@ -44,10 +46,10 @@ public class ActiveWeapon : MonoBehaviour
 
     private void FollowMousePos()
     {
-        Vector3 mousePos = GameInput.Instance.GetMousePosition();
+        Vector3 mousePos = GameInput.Instance.GetJoysticVector(joystick);
         Vector3 playerPos = Player.Instance.GetPlayerScreenPosition();
 
-        if (mousePos.x < playerPos.x)
+        if (mousePos.x < 0)
         {
             transform.rotation = Quaternion.Euler(0, 180, 0);
 
@@ -57,4 +59,6 @@ public class ActiveWeapon : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
     }
+
+
 }

@@ -91,6 +91,12 @@ public class GameInput : MonoBehaviour
         return mousePos;
     }
 
+    // public Vector2 GetJoystickPosition()
+    // {
+    //     Vector2 joystickPos = 
+    //     return joystickPos;
+    // }
+
 
     private void PlayerLoot_started(InputAction.CallbackContext context)
     {

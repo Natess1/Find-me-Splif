@@ -42,7 +42,6 @@ public class Player : Sounds
     private Camera mainCamera;
 
     private readonly float minMovingSpeed = 0.1f;
-    private float dirX, dirY;
     private float startMovingSpeed;
     private float flashRemaining;
     private int currentHealth;
@@ -118,6 +117,24 @@ public class Player : Sounds
     }
 
     public bool IsAlive() => isAlive;
+
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public void Heal(int amount)
+    {
+        currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
+
+        savingHealth = currentHealth;
+        PlayerPrefs.SetInt("health", currentHealth);
+    }
 
 
     public Vector3 GetPlayerScreenPosition()

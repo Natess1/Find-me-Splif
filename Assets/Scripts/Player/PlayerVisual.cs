@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerVisual : MonoBehaviour
 {
+
+    [SerializeField] private Joystick joystick;
+
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private FlashBlink flashBlink;
@@ -43,10 +46,11 @@ public class PlayerVisual : MonoBehaviour
 
     private void PlayerFacing()
     {
-        Vector3 mousePos = GameInput.Instance.GetMousePosition();
+        Vector3 mousePos = GameInput.Instance.GetJoysticVector(joystick);
         Vector3 playerPos = Player.Instance.GetPlayerScreenPosition();
 
-        spriteRenderer.flipX = mousePos.x < playerPos.x;
+
+        spriteRenderer.flipX = mousePos.x < 0;
     }
 
     private void OnDestroy()

@@ -21,7 +21,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         set { deadZone = Mathf.Abs(value); }
     }
 
-    public AxisOptions AxisOptions { get { return AxisOptions; } set { axisOptions = value; } }
+    public AxisOptions AxisOptions { get { return axisOptions; } set { axisOptions = value; } }
     public bool SnapX { get { return snapX; } set { snapX = value; } }
     public bool SnapY { get { return snapY; } set { snapY = value; } }
 
@@ -46,10 +46,12 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         DeadZone = deadZone;
         baseRect = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
+
         if (canvas == null)
             Debug.LogError("The Joystick is not placed inside a canvas");
 
         Vector2 center = new Vector2(0.5f, 0.5f);
+
         background.pivot = center;
         handle.anchorMin = center;
         handle.anchorMax = center;
@@ -65,18 +67,27 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     public void OnDrag(PointerEventData eventData)
     {
         cam = null;
+
         if (canvas.renderMode == RenderMode.ScreenSpaceCamera)
             cam = canvas.worldCamera;
 
         Vector2 position = RectTransformUtility.WorldToScreenPoint(cam, background.position);
         Vector2 radius = background.sizeDelta / 2;
+
         input = (eventData.position - position) / (radius * canvas.scaleFactor);
+
         FormatInput();
+
         HandleInput(input.magnitude, input.normalized, radius, cam);
+
         handle.anchoredPosition = input * radius * handleRange;
     }
 
-    protected virtual void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
+    protected virtual void HandleInput(
+        float magnitude,
+        Vector2 normalised,
+        Vector2 radius,
+        Camera cam)
     {
         if (magnitude > deadZone)
         {
@@ -84,7 +95,9 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
                 input = normalised;
         }
         else
+        {
             input = Vector2.zero;
+        }
     }
 
     private void FormatInput()
@@ -103,6 +116,7 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
         if (axisOptions == AxisOptions.Both)
         {
             float angle = Vector2.Angle(input, Vector2.up);
+
             if (snapAxis == AxisOptions.Horizontal)
             {
                 if (angle < 22.5f || angle > 157.5f)
@@ -117,15 +131,18 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
                 else
                     return (value > 0) ? 1 : -1;
             }
+
             return value;
         }
         else
         {
             if (value > 0)
                 return 1;
+
             if (value < 0)
                 return -1;
         }
+
         return 0;
     }
 
@@ -138,13 +155,27 @@ public class Joystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPoint
     protected Vector2 ScreenPointToAnchoredPosition(Vector2 screenPosition)
     {
         Vector2 localPoint = Vector2.zero;
-        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(baseRect, screenPosition, cam, out localPoint))
+
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            baseRect,
+            screenPosition,
+            cam,
+            out localPoint))
         {
             Vector2 pivotOffset = baseRect.pivot * baseRect.sizeDelta;
-            return localPoint - (background.anchorMax * baseRect.sizeDelta) + pivotOffset;
+
+            return localPoint
+                - (background.anchorMax * baseRect.sizeDelta)
+                + pivotOffset;
         }
+
         return Vector2.zero;
     }
 }
 
-public enum AxisOptions { Both, Horizontal, Vertical }
+public enum AxisOptions
+{
+    Both,
+    Horizontal,
+    Vertical
+}
