@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Paralax : MonoBehaviour
 {
-    [SerializeField] private GameObject MovigCamera;
+    [SerializeField] public GameObject MovigCamera;
     public float paralax = 0.5f;
     private float startingPosition;
 

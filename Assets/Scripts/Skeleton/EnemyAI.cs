@@ -36,6 +36,7 @@ public class EnemyAI : MonoBehaviour
     private float nextAttackTime = 0f;
     private float nextCheckDirectionTime = 0f;
     private float checkDirectionDuration = 0.1f;
+    private float forceChaseTimer = 0f;
 
     private void Awake()
     {
@@ -66,6 +67,24 @@ public class EnemyAI : MonoBehaviour
     {
         navMeshAgent.ResetPath();
         state = State.Death;
+    }
+
+    /// <summary>
+    /// Принудительное преследование игрока (используется WaveSpawner для волн).
+    /// Пока таймер не истёк, враг игнорирует дистанцию и идёт к игроку.
+    /// </summary>
+    public void ForceChase(float duration)
+    {
+        if (!isChaisingEnemy || state == State.Death) return;
+
+        forceChaseTimer = Mathf.Max(forceChaseTimer, duration);
+
+        if (state != State.Chasing)
+        {
+            navMeshAgent.ResetPath();
+            navMeshAgent.speed = chasingSpeed;
+            state = State.Chasing;
+        }
     }
 
     private enum State
@@ -118,7 +137,13 @@ public class EnemyAI : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(transform.position, Player.Instance.transform.position);
         State newState = State.Roaming;
 
-        if (isChaisingEnemy)
+        // Принудительное преследование (волны): таймер важнее дистанции
+        if (forceChaseTimer > 0f)
+        {
+            forceChaseTimer -= Time.deltaTime;
+            newState = State.Chasing;
+        }
+        else if (isChaisingEnemy)
         {
             if (distanceToPlayer <= chasingDistance)
             {

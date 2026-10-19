@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +10,7 @@ public class ButtonCoolDown : MonoBehaviour
     private Image btnImage;
     private Color origColor;
     private Color darkenedColor;
+    private Coroutine cooldownRoutine;
 
     void Start()
     {
@@ -25,9 +24,13 @@ public class ButtonCoolDown : MonoBehaviour
 
     private void OnButtonClick()
     {
-        StartCoroutine(PlayCoolDown());
+        // если предыдущий кулдаун ещё не кончился — перезапускаем его, а не наслаиваем корутины
+        if (cooldownRoutine != null)
+        {
+            StopCoroutine(cooldownRoutine);
+        }
 
-
+        cooldownRoutine = StartCoroutine(PlayCoolDown());
     }
 
     private IEnumerator PlayCoolDown()
@@ -36,9 +39,26 @@ public class ButtonCoolDown : MonoBehaviour
         btnImage.color = darkenedColor;
         yield return new WaitForSeconds(coolDownTime);
 
+        cooldownRoutine = null;
+
         btnImage.color = origColor;
         btn.interactable = true;
+    }
 
+    private void OnDisable()
+    {
+        // Кнопку выключили посреди кулдауна (смена кадра аниматора, пауза и т.п.):
+        // корутина остановится сама, иначе кнопка навсегда останется потухшей и некликабельной.
+        cooldownRoutine = null;
 
+        if (btn != null)
+        {
+            btn.interactable = true;
+        }
+
+        if (btnImage != null && origColor != default)
+        {
+            btnImage.color = origColor;
+        }
     }
 }

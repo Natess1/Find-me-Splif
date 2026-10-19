@@ -3,7 +3,23 @@ using System;
 
 public class Sword : MonoBehaviour
 {
-    [SerializeField] private int damageAmount = 2;
+    [Header("Урон")]
+    [SerializeField] private int baseDamage = 2;
+    [SerializeField] private bool scaleWithLevel = true;   // +урон за каждый уровень игрока
+
+    /// <summary>Итоговый урон: база + бонус за уровень (LevelSystem).</summary>
+    private int damageAmount
+    {
+        get
+        {
+            if (!scaleWithLevel || LevelSystem.Instance == null)
+            {
+                return baseDamage;
+            }
+
+            return baseDamage + (LevelSystem.Instance.CurrentLevel - 1) * LevelSystem.Instance.SwordBonusPerLevel;
+        }
+    }
 
     private PolygonCollider2D polygonCollider2d;
 

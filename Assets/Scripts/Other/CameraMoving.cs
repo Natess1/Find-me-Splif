@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CameraParallax : MonoBehaviour
 {
-    [SerializeField] private float cameraSpeed = 2f;
-    [SerializeField] private float movingTime = 3f;
+    [SerializeField] public float cameraSpeed = 2f;
+    [SerializeField] public float movingTime = 3f;
 
     private float timer = 0f;
     private int direction = 1;

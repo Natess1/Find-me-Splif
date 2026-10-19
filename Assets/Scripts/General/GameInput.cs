@@ -1,6 +1,5 @@
 using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -11,7 +10,17 @@ public class GameInput : MonoBehaviour
 
     [SerializeField] private TMP_Text moneyCounter;
     [SerializeField] private TMP_Text heartCounter;
+    [SerializeField] private TMP_Text timerText;   // опционально: таймер забега
+    [SerializeField] private TMP_Text levelText;   // опционально: текущий уровень
     [SerializeField] private Joystick joystick;
+
+    [Header("Debug: текущие значения (можно менять прямо в Play Mode)")]
+    [SerializeField] private int debugCurrentMoney;   // текущие деньги (не заработок) — редактируется в инспекторе
+
+#if UNITY_EDITOR
+    private int lastDebugMoney;
+    private bool debugMoneyInited;
+#endif
 
     public event EventHandler OnPlayerAttack;
     public event EventHandler OnPlayerDash;
@@ -41,14 +50,65 @@ public class GameInput : MonoBehaviour
 
     void Update()
     {
+#if UNITY_EDITOR
+        SyncDebugMoney();
+#endif
+
         moneyCounter.text = PlayerPrefs.GetInt("money").ToString();
         heartCounter.text = PlayerPrefs.GetInt("health").ToString();
+
+        if (timerText != null)
+        {
+            timerText.text = LevelSystem.Instance != null
+                ? LevelSystem.FormatTime(LevelSystem.Instance.ElapsedTime)
+                : "00:00";
+        }
+
+        if (levelText != null)
+        {
+            levelText.text = LevelSystem.Instance != null
+                ? "Ур. " + LevelSystem.Instance.CurrentLevel
+                : "Ур. 1";
+        }
     }
     public int GetMoney()
     {
         Debug.Log(money);
         return money;
     }
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// Поле "Debug Current Money" в инспекторе = ручной ввод текущих денег.
+    /// Изменили руками — значение сразу уходит в PlayerPrefs (и в HUD).
+    /// Если деньги изменил геймплей (подбор монет) — поле само обновляется из PlayerPrefs.
+    /// В билд этот код не попадает (#if UNITY_EDITOR).
+    /// </summary>
+    private void SyncDebugMoney()
+    {
+        int actual = PlayerPrefs.GetInt("money");
+
+        if (!debugMoneyInited)
+        {
+            debugMoneyInited = true;
+            lastDebugMoney = actual;
+            debugCurrentMoney = actual;
+            return;
+        }
+
+        if (debugCurrentMoney != lastDebugMoney)
+        {
+            lastDebugMoney = Mathf.Max(0, debugCurrentMoney);
+            debugCurrentMoney = lastDebugMoney;
+            PlayerPrefs.SetInt("money", lastDebugMoney);
+        }
+        else if (actual != lastDebugMoney)
+        {
+            lastDebugMoney = actual;
+            debugCurrentMoney = actual;
+        }
+    }
+#endif
 
     public void AddMoney(int addingMoney)
     {

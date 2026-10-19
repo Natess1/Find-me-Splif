@@ -3,8 +3,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using System;
 using System.Collections;
-using UnityEditor;
-using NUnit.Framework.Constraints;
 using UnityEngine.UI;
 
 [SelectionBase]
@@ -27,6 +25,14 @@ public class Player : Sounds
     [SerializeField] private float dashTime = 0.4f;
     [SerializeField] private float dashCoolDownTime = 3f;
 
+    [Header("Heal Effect")]
+    [SerializeField] private float healEffectDuration = 2f;   // сколько секунд живёт спрайт хила
+    [SerializeField] private float healEffectRiseSpeed = 1.5f; // скорость подъёма спрайта вверх (юнитов/сек)
+    [SerializeField] private Sprite healEffectSprite;         // пусто — берётся Resources/Effects/HealCross.png
+
+    [Header("Debug: текущие значения (можно менять прямо в Play Mode)")]
+    [SerializeField] private int currentHealth;               // текущее HP (не максимум) — редактируется в инспекторе
+
     [Header("Other")]
     [SerializeField] private TrailRenderer trailRenderer;
     [SerializeField] UnityEngine.UI.Image fadeScreen;
@@ -37,6 +43,13 @@ public class Player : Sounds
 
     Vector2 InputVector;
 
+    /// <summary>
+    /// Куда смотрит персонаж (true — влево). Единый источник для спрайта (PlayerVisual)
+    /// и оружия с его хитбоксом (ActiveWeapon): пока джойстик отклонён по X — по его знаку;
+    /// отпущен — остаётся последняя сторона.
+    /// </summary>
+    public bool FacingLeft { get; private set; }
+
     private Rigidbody2D rigidBody;
     private KnockBack KnockBack;
     private Camera mainCamera;
@@ -44,7 +57,6 @@ public class Player : Sounds
     private readonly float minMovingSpeed = 0.1f;
     private float startMovingSpeed;
     private float flashRemaining;
-    private int currentHealth;
     private int savingHealth;
 
     private bool canTakeDamage;
@@ -70,6 +82,13 @@ public class Player : Sounds
     private void Update()
     {
         InputVector = GameInput.Instance.GetJoysticVector(joystick);
+
+        // Пока джойстик отклонён по X — запоминаем сторону взгляда.
+        // Отпущен — сторона НЕ меняется: спрайт и удар смотрят туда, куда шли.
+        if (Mathf.Abs(InputVector.x) > 0.01f)
+        {
+            FacingLeft = InputVector.x < 0;
+        }
 
         savingHealth = currentHealth;
 
@@ -134,6 +153,8 @@ public class Player : Sounds
 
         savingHealth = currentHealth;
         PlayerPrefs.SetInt("health", currentHealth);
+
+        HealEffect.Spawn(transform, healEffectSprite, healEffectDuration, healEffectRiseSpeed);
     }
 
 
@@ -197,6 +218,12 @@ public class Player : Sounds
 
             KnockBack.StopKnockBackMov();
             GameInput.Instance.DisableMovement();
+
+            // Фиксируем итоги забега и обновляем рекорды до перехода на экран смерти
+            if (LevelSystem.Instance != null)
+            {
+                LevelSystem.Instance.SaveRunResults();
+            }
 
             OnPlayerDeath?.Invoke(this, EventArgs.Empty);
             SceneTransition.SwitchToScene("DeathScene");

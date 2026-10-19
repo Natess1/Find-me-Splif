@@ -90,6 +90,12 @@ public class EnemyEntity : MonoBehaviour
             OnDeath?.Invoke(this, EventArgs.Empty);
             GameInput.Instance.AddMoney(enemySO.haveMoney);
 
+            // Опыт за убийство -> система уровней
+            if (LevelSystem.Instance != null)
+            {
+                LevelSystem.Instance.AddXP(enemySO.xpReward);
+            }
+
             if (CompareTag("Boss"))
             {
                 OnBossDeath?.Invoke(this, EventArgs.Empty);

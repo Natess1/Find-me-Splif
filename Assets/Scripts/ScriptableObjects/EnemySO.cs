@@ -8,7 +8,6 @@ public class EnemySO : ScriptableObject
     public int enemyHealth;
     public int enemyDamageAmount;
     public int haveMoney;
-
-
+    public int xpReward = 5;   // сколько опыта даёт за убийство
 
 }

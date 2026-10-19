@@ -11,6 +11,11 @@ public class MainMenu : MonoBehaviour
         SceneTransition.SwitchToScene("NewPlayScene");
     }
 
+    public void LoadTutorialScene()
+    {
+        SceneTransition.SwitchToScene("TutorialScene");
+    }
+
     public void LoadSettingsScene()
     {
         SceneTransition.SwitchToScene("SettingsScene");

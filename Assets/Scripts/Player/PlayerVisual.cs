@@ -46,11 +46,9 @@ public class PlayerVisual : MonoBehaviour
 
     private void PlayerFacing()
     {
-        Vector3 mousePos = GameInput.Instance.GetJoysticVector(joystick);
-        Vector3 playerPos = Player.Instance.GetPlayerScreenPosition();
-
-
-        spriteRenderer.flipX = mousePos.x < 0;
+        // Сторона считается в Player.FacingLeft (единый источник с оружием):
+        // при отпущенном джойстике персонаж остаётся смотреть в последнюю сторону
+        spriteRenderer.flipX = Player.Instance.FacingLeft;
     }
 
     private void OnDestroy()

@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using Unity.VisualScripting;
 
 public class ActiveWeapon : MonoBehaviour
 {
@@ -46,18 +45,12 @@ public class ActiveWeapon : MonoBehaviour
 
     private void FollowMousePos()
     {
-        Vector3 mousePos = GameInput.Instance.GetJoysticVector(joystick);
-        Vector3 playerPos = Player.Instance.GetPlayerScreenPosition();
-
-        if (mousePos.x < 0)
-        {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
-
-        }
-        else
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
+        // Оружие и его хитбокс разворачиваются по Player.FacingLeft — туда же, куда смотрит спрайт.
+        // Раньше тут читался сырой джойстик: при отпущенном (x = 0) оружие отворачивалось вправо,
+        // хотя персонаж оставался смотреть влево — и удар шёл не в ту сторону.
+        transform.rotation = Player.Instance.FacingLeft
+            ? Quaternion.Euler(0f, 180f, 0f)
+            : Quaternion.Euler(0f, 0f, 0f);
     }
 
 
