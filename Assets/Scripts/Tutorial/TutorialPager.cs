@@ -131,13 +131,13 @@ public class TutorialPager : MonoBehaviour
             {
                 title = "Ходьба",
                 videoResourcesPath = "Tutorial/Videos/Walk",
-                controlsText = "Потяни джойстик, чтобы ходить"
+                controlsText = "Потяни джойстик, чтобы ходить\nЕсли отклонить джойстик чуть-чуть\n— персонаж будет идти медленней"
             },
             new TutorialPage
             {
                 title = "Дэш",
                 videoResourcesPath = "Tutorial/Videos/Dash",
-                controlsText = "Нажми кнопку DASH,\nчтобы сделать рывок"
+                controlsText = "Отклони джойстик в любую сторону\n и нажми кнопку DASH, чтобы сделать рывок"
             },
             new TutorialPage
             {
@@ -149,7 +149,7 @@ public class TutorialPager : MonoBehaviour
             {
                 title = "Хил",
                 videoResourcesPath = "Tutorial/Videos/Heal",
-                controlsText = "Подойди к торговцу\nи купи лечение за монеты"
+                controlsText = "Подойди к ведру с водой\nи купи лечение за монеты"
             }
         };
     }

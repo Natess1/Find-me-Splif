@@ -5,6 +5,8 @@ using UnityEngine;
 /// Система уровней и таймер забега.
 /// Опыт капает за убийства (EnemySO.xpReward), уровень живёт один забег
 /// и сбрасывается при загрузке игровой сцены.
+/// Требования по XP растут квадратично (N^xpLevelExponent), чтобы уровень
+/// не разгонялся вместе с ростом числа врагов от WaveSpawner.
 /// Навсегда сохраняются только рекорды (best_time / best_level).
 /// Урон меча растёт с уровнем: Sword читает CurrentLevel.
 /// </summary>
@@ -16,15 +18,16 @@ public class LevelSystem : MonoBehaviour
 
     [Header("Настройки опыта")]
     [SerializeField] private int startLevel = 1;
-    [SerializeField] private int xpPerLevelBase = 10;   // уровень N требует N * xpPerLevelBase XP
+    [SerializeField] private int xpPerLevelBase = 5;     // уровень N требует xpPerLevelBase * N^xpLevelExponent XP
+    [SerializeField] private float xpLevelExponent = 2f; // степень кривой XP (2 = квадратичный рост)
     [SerializeField] private int swordBonusPerLevel = 1; // +урон меча за каждый уровень
 
     public int CurrentLevel { get; private set; }
     public int CurrentXP { get; private set; }
     public int SwordBonusPerLevel => swordBonusPerLevel;
 
-    /// <summary>Сколько XP нужно, чтобы подняться с текущего уровня.</summary>
-    public int XPToNextLevel => CurrentLevel * xpPerLevelBase;
+    /// <summary>Сколько XP нужно, чтобы подняться с текущего уровня (квадратичная кривая).</summary>
+    public int XPToNextLevel => Mathf.Max(1, Mathf.RoundToInt(xpPerLevelBase * Mathf.Pow(CurrentLevel, xpLevelExponent)));
 
     /// <summary>Прогресс до следующего уровня (0..1).</summary>
     public float XPProgress => Mathf.Clamp01((float)CurrentXP / XPToNextLevel);

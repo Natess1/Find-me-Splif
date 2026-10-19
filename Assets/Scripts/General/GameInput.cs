@@ -67,8 +67,8 @@ public class GameInput : MonoBehaviour
         if (levelText != null)
         {
             levelText.text = LevelSystem.Instance != null
-                ? "Ур. " + LevelSystem.Instance.CurrentLevel
-                : "Ур. 1";
+                ? "lvl. " + LevelSystem.Instance.CurrentLevel
+                : "lvl. 1";
         }
     }
     public int GetMoney()

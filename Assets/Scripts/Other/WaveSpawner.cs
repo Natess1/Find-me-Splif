@@ -5,7 +5,8 @@ using UnityEngine.AI;
 /// <summary>
 /// Волны врагов для режима выживания.
 /// Каждую волну спавнит группу врагов вокруг игрока (на валидной точке NavMesh),
-/// количество волне растёт, интервал между волнами сокращается.
+/// количество врагов зависит от уровня игрока (LevelSystem), интервал между волнами
+/// сокращается, предел живых врагов тоже растёт с уровнем.
 /// Спавненные враги на несколько секунд принудительно преследуют игрока (ForceChase),
 /// потом живут по обычной логике EnemyAI.
 /// Повесь на любой объект игровой сцены, назначь префабы врагов.
@@ -20,9 +21,10 @@ public class WaveSpawner : MonoBehaviour
     [SerializeField] private float waveInterval = 20f;    // базовый интервал между волнами
     [SerializeField] private float intervalMultiplier = 0.95f; // каждая волна чуть быстрее
     [SerializeField] private float minInterval = 8f;      // нижний предел интервала
-    [SerializeField] private int baseEnemyCount = 3;      // врагов в первой волне
-    [SerializeField] private int enemiesPerWave = 1;      // +врагов за каждую волну
-    [SerializeField] private int maxEnemiesAlive = 25;    // предел живых врагов
+    [SerializeField] private int baseEnemyCount = 3;      // врагов на 1-м уровне игрока
+    [SerializeField] private int enemiesPerLevel = 2;     // +врагов за каждый уровень игрока
+    [SerializeField] private int maxEnemiesAlive = 25;    // предел живых врагов на 1-м уровне
+    [SerializeField] private int extraAlivePerLevel = 2;  // +к пределу живых за каждый уровень игрока
 
     [Header("Спавн вокруг игрока")]
     [SerializeField] private float minSpawnRadius = 8f;
@@ -62,14 +64,20 @@ public class WaveSpawner : MonoBehaviour
     {
         waveNumber++;
 
-        int count = baseEnemyCount + enemiesPerWave * (waveNumber - 1);
-        count = Mathf.Min(count, maxEnemiesAlive - alive.Count);
+        // Размер волны зависит от уровня игрока, а не от номера волны
+        int count = baseEnemyCount + enemiesPerLevel * (PlayerLevel - 1);
+        count = Mathf.Min(count, MaxAliveEnemies - alive.Count);
 
         for (int i = 0; i < count; i++)
         {
             SpawnOne();
         }
     }
+
+    private int PlayerLevel => LevelSystem.Instance != null ? LevelSystem.Instance.CurrentLevel : 1;
+
+    // Предел живых врагов растёт вместе с уровнем игрока
+    private int MaxAliveEnemies => maxEnemiesAlive + extraAlivePerLevel * (PlayerLevel - 1);
 
     private void SpawnOne()
     {

@@ -4,9 +4,14 @@ using UnityEngine.UI;
 
 public class HealthPurchase : MonoBehaviour
 {
-    [Header("Purchase Settings")]
-    [SerializeField] private int price = 50;
+    [Header("Лечение")]
     [SerializeField] private int healthToRestore = 3;
+
+    [Header("Цена зависит от уровня игрока")]
+    [SerializeField] private int basePrice = 10;               // цена на 1-м уровне
+    [SerializeField] private float priceGrowthPerLevel = 3f;   // во сколько раз дорожает лечение за уровень
+    [SerializeField] private int maxScalingLevel = 10;          // после этого уровня цена замораживается
+    [SerializeField] private int priceCap = 0;                  // 0 = без потолка; иначе цена не выше этого
 
     [Header("Button")]
     [SerializeField] private Button buyButton;
@@ -22,6 +27,25 @@ public class HealthPurchase : MonoBehaviour
 
     private Player player;
     private Camera mainCamera;
+
+    /// <summary>
+    /// Текущая цена: basePrice × priceGrowthPerLevel^(уровень-1),
+    /// замораживается на maxScalingLevel (по умолчанию — 10-м уровне).
+    /// </summary>
+    private int CurrentPrice
+    {
+        get
+        {
+            int level = LevelSystem.Instance != null ? LevelSystem.Instance.CurrentLevel : 1;
+            int scaledLevel = Mathf.Clamp(level, 1, Mathf.Max(1, maxScalingLevel));
+            int currentPrice = Mathf.RoundToInt(basePrice * Mathf.Pow(priceGrowthPerLevel, scaledLevel - 1));
+            if (priceCap > 0)
+            {
+                currentPrice = Mathf.Min(currentPrice, priceCap);
+            }
+            return Mathf.Max(1, currentPrice);
+        }
+    }
 
     private void Awake()
     {
@@ -92,12 +116,12 @@ public class HealthPurchase : MonoBehaviour
 
         int money = PlayerPrefs.GetInt("money");
 
-        if (money >= price)
+        if (money >= CurrentPrice)
         {
             buttonText.text = string.Format(
                 enoughMoneyText,
                 healthToRestore,
-                price
+                CurrentPrice
             );
 
             buyButton.interactable = true;
@@ -116,7 +140,7 @@ public class HealthPurchase : MonoBehaviour
 
         int money = PlayerPrefs.GetInt("money");
 
-        if (money < price)
+        if (money < CurrentPrice)
         {
             UpdateButton();
             return;
@@ -128,7 +152,7 @@ public class HealthPurchase : MonoBehaviour
             return;
         }
 
-        GameInput.Instance.RemoveMoney(price);
+        GameInput.Instance.RemoveMoney(CurrentPrice);
 
         player.Heal(healthToRestore);
 
